@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mychatbot
+  labels:
+    app: mychatbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mychatbot
+  template:
+    metadata:
+      labels:
+        app: mychatbot
+    spec:
+      containers:
+        - image: shubhamarora321/mychatbot
+          imagePullPolicy: Always
+          name: svc
+          ports:
+            - containerPort: 8501
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mychatbot
+  labels:
+    app: mychatbot
+spec:
+  selector:
+    app: mychatbot
+  ports:
+    - port: 8501
+      name: http
+      targetPort: 8501
